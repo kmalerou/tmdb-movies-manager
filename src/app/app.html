@@ -1,0 +1,30 @@
+@if (!isHandset()) {
+  <mat-toolbar color="primary" class="toolbar">
+    <span class="toolbar__title">MovieCollections</span>
+    <nav class="toolbar__nav">
+      <a mat-button routerLink="/movies" routerLinkActive="toolbar__link--active">
+        Movies
+      </a>
+      <a mat-button routerLink="/collections" routerLinkActive="toolbar__link--active">
+        Collections
+      </a>
+    </nav>
+  </mat-toolbar>
+}
+
+<main [class.main--with-bottom-nav]="isHandset()">
+  <router-outlet />
+</main>
+
+@if (isHandset()) {
+  <nav class="bottom-nav mat-elevation-z8">
+    <a routerLink="/movies" routerLinkActive="bottom-nav__item--active" class="bottom-nav__item">
+      <mat-icon>movie</mat-icon>
+      <span>Movies</span>
+    </a>
+    <a routerLink="/collections" routerLinkActive="bottom-nav__item--active" class="bottom-nav__item">
+      <mat-icon>collections_bookmark</mat-icon>
+      <span>Collections</span>
+    </a>
+  </nav>
+}
