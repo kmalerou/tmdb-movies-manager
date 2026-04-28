@@ -3,20 +3,19 @@
 @if (collections().length === 0) {
   <p class="panel-empty">No collections yet. Create one first.</p>
 } @else {
-  <mat-nav-list>
+  <mat-list>
     @for (collection of collections(); track collection.id) {
-      <button mat-list-item [disabled]="isInCollection(collection)" (click)="addToCollection(collection.id)">
-        {{ collection.name }}
-        <span matListItemMeta>
-          @if (isInCollection(collection)) {
-            <mat-icon>check</mat-icon>
-          } @else {
-            {{ collection.movies.length }}
-          }
-        </span>
-      </button>
+      <mat-list-item>
+        <span matListItemTitle>{{ collection.name }}</span>
+        <button matListItemMeta mat-icon-button
+          [disabled]="isInCollection(collection)"
+          [attr.aria-label]="isInCollection(collection) ? 'Already in collection' : 'Add to ' + collection.name"
+          (click)="addToCollection(collection.id)">
+          <mat-icon>{{ isInCollection(collection) ? 'check' : 'playlist_add' }}</mat-icon>
+        </button>
+      </mat-list-item>
     }
-  </mat-nav-list>
+  </mat-list>
 }
 
 <div class="panel-actions">
