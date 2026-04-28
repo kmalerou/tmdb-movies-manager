@@ -1,1 +1,17 @@
-<app-movie-grid [movies]="movies()" action="add" (movieAction)="onAdd($event)" />
+<div class="movies-page">
+  <div class="movies-page__search">
+    <app-search-bar (queryChange)="onQueryChange($event)" />
+  </div>
+
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  <app-movie-grid [movies]="movies()" action="add" (movieAction)="onMovieAction($event)" />
+
+  <div appInfiniteScroll (scrolled)="onScroll()" class="scroll-sentinel"></div>
+</div>
+
+<button mat-fab class="fab" [class.fab--mobile]="isHandset()" aria-label="New collection" (click)="openCreateCollectionDialog()">
+  <mat-icon>add</mat-icon>
+</button>

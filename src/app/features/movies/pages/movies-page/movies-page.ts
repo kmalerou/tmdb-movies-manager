@@ -1,27 +1,62 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { LayoutService } from '../../../../core/services/layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Store } from '@ngrx/store';
+import { toSignal } from '@angular/core/rxjs-interop';
 
+import { CreateCollectionDialog } from '../../../../shared/components/create-collection-dialog/create-collection-dialog';
 import { MovieGrid } from '../../../../shared/components/movie-grid/movie-grid';
+import { InfiniteScroll } from '../../../../shared/directives/infinite-scroll';
 import { Movie } from '../../../../shared/models/movie.model';
-
-const STUB_MOVIES: Movie[] = Array.from({ length: 12 }, (_, i) => ({
-  id: i + 1,
-  title: `Movie Title ${i + 1}`,
-  posterPath: null,
-  voteAverage: 6 + (i % 4) * 0.5,
-  genres: i % 3 === 0 ? ['Action', 'Thriller'] : i % 3 === 1 ? ['Drama'] : ['Comedy', 'Romance'],
-}));
+import { SearchBar } from '../../components/search-bar/search-bar';
+import { MoviesActions } from '../../store/movies.actions';
+import { selectHasMore, selectIsLoading, selectItems, selectPage } from '../../store/movies.selectors';
 
 @Component({
   selector: 'app-movies-page',
-  imports: [MovieGrid],
+  imports: [MovieGrid, SearchBar, InfiniteScroll, MatProgressBarModule, MatButtonModule, MatIconModule],
   templateUrl: './movies-page.html',
   styleUrl: './movies-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MoviesPage {
-  readonly movies = signal(STUB_MOVIES);
+export class MoviesPage implements OnInit {
+  private readonly store = inject(Store);
+  private readonly dialog = inject(MatDialog);
 
-  onAdd(movie: Movie): void {
-    console.log('add to collection', movie);
+  readonly isHandset = inject(LayoutService).isHandset;
+
+  readonly movies = toSignal(this.store.select(selectItems), { initialValue: [] });
+  readonly isLoading = toSignal(this.store.select(selectIsLoading), { initialValue: false });
+  readonly hasMore = toSignal(this.store.select(selectHasMore), { initialValue: false });
+  readonly currentPage = toSignal(this.store.select(selectPage), { initialValue: 0 });
+
+  private readonly query = signal('');
+
+  ngOnInit(): void {
+    this.store.dispatch(MoviesActions.loadMovies({ query: '', page: 1 }));
+  }
+
+  onQueryChange(query: string): void {
+    this.query.set(query);
+    this.store.dispatch(MoviesActions.loadMovies({ query, page: 1 }));
+  }
+
+  onScroll(): void {
+    if (this.hasMore() && !this.isLoading()) {
+      this.store.dispatch(
+        MoviesActions.loadMovies({ query: this.query(), page: this.currentPage() + 1 }),
+      );
+    }
+  }
+
+  onMovieAction(_movie: Movie): void {
+    // wired in slice 6 — Add to Collection
+  }
+
+  openCreateCollectionDialog(): void {
+    this.dialog.open(CreateCollectionDialog);
   }
 }

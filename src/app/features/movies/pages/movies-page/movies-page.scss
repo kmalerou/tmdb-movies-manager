@@ -1,0 +1,29 @@
+.movies-page {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80px;
+
+  &__search {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--mat-sys-surface);
+    padding: 12px 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+
+  &--mobile {
+    bottom: 80px; // clears the 64px bottom nav
+  }
+}
+
+.scroll-sentinel {
+  height: 1px;
+}
