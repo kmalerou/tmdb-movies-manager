@@ -1,13 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { LayoutService } from '../../../../core/services/layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { CreateCollectionDialog } from '../../../../shared/components/create-collection-dialog/create-collection-dialog';
+import { CreateCollectionFab } from '../../../../shared/components/create-collection-fab/create-collection-fab';
 import { MovieGrid } from '../../../../shared/components/movie-grid/movie-grid';
 import { InfiniteScroll } from '../../../../shared/directives/infinite-scroll';
 import { Movie } from '../../../../shared/models/movie.model';
@@ -17,16 +13,13 @@ import { selectHasMore, selectIsLoading, selectItems, selectPage } from '../../s
 
 @Component({
   selector: 'app-movies-page',
-  imports: [MovieGrid, SearchBar, InfiniteScroll, MatProgressBarModule, MatButtonModule, MatIconModule],
+  imports: [MovieGrid, SearchBar, InfiniteScroll, MatProgressBarModule, CreateCollectionFab],
   templateUrl: './movies-page.html',
   styleUrl: './movies-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesPage implements OnInit {
   private readonly store = inject(Store);
-  private readonly dialog = inject(MatDialog);
-
-  readonly isHandset = inject(LayoutService).isHandset;
 
   readonly movies = toSignal(this.store.select(selectItems), { initialValue: [] });
   readonly isLoading = toSignal(this.store.select(selectIsLoading), { initialValue: false });
@@ -54,9 +47,5 @@ export class MoviesPage implements OnInit {
 
   onMovieAction(_movie: Movie): void {
     // wired in slice 6 — Add to Collection
-  }
-
-  openCreateCollectionDialog(): void {
-    this.dialog.open(CreateCollectionDialog);
   }
 }

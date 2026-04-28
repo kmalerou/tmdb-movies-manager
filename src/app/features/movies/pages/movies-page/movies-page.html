@@ -12,6 +12,4 @@
   <div appInfiniteScroll (scrolled)="onScroll()" class="scroll-sentinel"></div>
 </div>
 
-<button mat-fab class="fab" [class.fab--mobile]="isHandset()" aria-label="New collection" (click)="openCreateCollectionDialog()">
-  <mat-icon>add</mat-icon>
-</button>
+<app-create-collection-fab />
