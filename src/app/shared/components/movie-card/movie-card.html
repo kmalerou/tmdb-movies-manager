@@ -1,0 +1,32 @@
+<mat-card class="movie-card">
+  @if (posterUrl()) {
+    <img class="movie-card__poster" [src]="posterUrl()" [alt]="movie().title" />
+  } @else {
+    <div class="movie-card__poster movie-card__poster--placeholder">
+      <mat-icon>movie</mat-icon>
+    </div>
+  }
+
+  <mat-card-content class="movie-card__content">
+    <p class="movie-card__title">{{ movie().title }}</p>
+    <p class="movie-card__meta">⭐ {{ movie().voteAverage | number: '1.1-1' }}</p>
+  </mat-card-content>
+
+  @switch (action()) {
+    @case ('add') {
+      <mat-card-actions align="end">
+        <button mat-icon-button (click)="add.emit(movie())" aria-label="Add to collection">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+      </mat-card-actions>
+    }
+    @case ('remove') {
+      <mat-card-actions align="end">
+        <button mat-icon-button color="warn" (click)="remove.emit(movie())" aria-label="Remove from collection">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-card-actions>
+    }
+    @default {}
+  }
+</mat-card>
