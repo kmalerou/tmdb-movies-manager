@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>New Collection</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      [formControl]="nameControl"
+      placeholder="e.g. My Favourites"
+      (keyup.enter)="submit()"
+      cdkFocusInitial
+    />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button [disabled]="nameControl.invalid" (click)="submit()">
+    Create
+  </button>
+</mat-dialog-actions>
