@@ -1,16 +1,14 @@
 @if (!isHandset()) {
   <mat-toolbar color="primary" class="toolbar">
     <span class="toolbar__title">MovieCollections</span>
-    <nav class="toolbar__nav">
-      <a mat-button routerLink="/movies" routerLinkActive="toolbar__link--active">
-        Movies
-      </a>
-      <a mat-button routerLink="/collections" routerLinkActive="toolbar__link--active">
-        Collections
-      </a>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="toolbar__nav">
+      <a mat-tab-link routerLink="/movies" routerLinkActive #moviesLink="routerLinkActive" [active]="moviesLink.isActive">Movies</a>
+      <a mat-tab-link routerLink="/collections" routerLinkActive #collectionsLink="routerLinkActive" [active]="collectionsLink.isActive">Collections</a>
     </nav>
   </mat-toolbar>
 }
+
+<mat-tab-nav-panel #tabPanel />
 
 <main [class.main--with-bottom-nav]="isHandset()">
   <router-outlet />

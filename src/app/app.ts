@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { LayoutService } from './core/services/layout';
@@ -13,7 +13,7 @@ import { LayoutService } from './core/services/layout';
     RouterLink,
     RouterLinkActive,
     MatToolbarModule,
-    MatButtonModule,
+    MatTabsModule,
     MatIconModule,
   ],
   templateUrl: './app.html',
