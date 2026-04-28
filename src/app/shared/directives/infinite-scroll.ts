@@ -9,11 +9,12 @@ export class InfiniteScroll implements AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
 
   ngAfterViewInit(): void {
-    this.observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        this.scrolled.emit();
-      }
-    });
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) this.scrolled.emit();
+      },
+      { rootMargin: '300px' },
+    );
     this.observer.observe(this.el.nativeElement);
   }
 

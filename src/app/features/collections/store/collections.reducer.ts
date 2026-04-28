@@ -5,19 +5,21 @@ import { CollectionsActions } from './collections.actions';
 
 export const COLLECTIONS_STORAGE_KEY = 'movie-collections';
 
+export function loadCollectionsFromStorage(): Collection[] {
+  try {
+    const stored = localStorage.getItem(COLLECTIONS_STORAGE_KEY);
+    return stored ? (JSON.parse(stored) as Collection[]) : [];
+  } catch {
+    return [];
+  }
+}
+
 export interface CollectionsState {
   collections: Collection[];
 }
 
 const initialState: CollectionsState = {
-  collections: (() => {
-    try {
-      const stored = localStorage.getItem(COLLECTIONS_STORAGE_KEY);
-      return stored ? (JSON.parse(stored) as Collection[]) : [];
-    } catch {
-      return [];
-    }
-  })(),
+  collections: loadCollectionsFromStorage(),
 };
 
 export const collectionsFeature = createFeature({

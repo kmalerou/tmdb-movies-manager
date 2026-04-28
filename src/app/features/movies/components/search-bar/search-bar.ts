@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,16 +13,18 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs';
   styleUrl: './search-bar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBar implements OnInit {
+export class SearchBar {
   readonly queryChange = output<string>();
 
   readonly searchControl = new FormControl('', { nonNullable: true });
 
-  ngOnInit(): void {
+  constructor() {
+    const destroyRef = inject(DestroyRef);
     this.searchControl.valueChanges.pipe(
       map((value) => value.trim()),
       debounceTime(300),
       distinctUntilChanged(),
+      takeUntilDestroyed(destroyRef),
     ).subscribe((query) => this.queryChange.emit(query));
   }
 }
