@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
+import { LayoutService } from './core/services/layout';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +21,5 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  private readonly breakpointObserver = inject(BreakpointObserver);
-
-  readonly isHandset = toSignal(
-    this.breakpointObserver
-      .observe(Breakpoints.Handset)
-      .pipe(map((result) => result.matches)),
-    { initialValue: false },
-  );
+  readonly isHandset = inject(LayoutService).isHandset;
 }
