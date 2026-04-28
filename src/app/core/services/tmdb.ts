@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable, shareReplay } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { Movie } from '../../shared/models/movie.model';
+import { ApiService } from './api';
 
 interface TmdbMovie {
   id: number;
@@ -38,10 +38,10 @@ function toMovie(raw: TmdbMovie, genreMap: GenreMap): Movie {
 
 @Injectable({ providedIn: 'root' })
 export class TmdbService {
-  private readonly http = inject(HttpClient);
+  private readonly api = inject(ApiService);
   private readonly base = environment.tmdbBaseUrl;
 
-  private readonly genreMap$: Observable<GenreMap> = this.http
+  private readonly genreMap$: Observable<GenreMap> = this.api
     .get<{ genres: { id: number; name: string }[] }>(`${this.base}/genre/movie/list`)
     .pipe(
       map(({ genres }) => Object.fromEntries(genres.map((g) => [g.id, g.name]))),
@@ -50,7 +50,7 @@ export class TmdbService {
 
   getPopular(page: number): Observable<MoviesPage> {
     return forkJoin({
-      page: this.http.get<TmdbPageResponse>(`${this.base}/movie/popular`, { params: { page } }),
+      page: this.api.get<TmdbPageResponse>(`${this.base}/movie/popular`, { page }),
       genreMap: this.genreMap$,
     }).pipe(
       map(({ page, genreMap }) => ({
@@ -62,7 +62,7 @@ export class TmdbService {
 
   search(query: string, page: number): Observable<MoviesPage> {
     return forkJoin({
-      page: this.http.get<TmdbPageResponse>(`${this.base}/search/movie`, { params: { query, page } }),
+      page: this.api.get<TmdbPageResponse>(`${this.base}/search/movie`, { query, page }),
       genreMap: this.genreMap$,
     }).pipe(
       map(({ page, genreMap }) => ({
