@@ -12,21 +12,16 @@
     <p class="movie-card__meta">⭐ {{ movie().voteAverage | number: '1.1-1' }}</p>
   </mat-card-content>
 
-  @switch (action()) {
-    @case ('add') {
-      <mat-card-actions align="end">
-        <button mat-icon-button (click)="add.emit(movie())" aria-label="Add to collection">
-          <mat-icon>playlist_add</mat-icon>
-        </button>
-      </mat-card-actions>
-    }
-    @case ('remove') {
-      <mat-card-actions align="end">
-        <button mat-icon-button color="warn" (click)="remove.emit(movie())" aria-label="Remove from collection">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
-      </mat-card-actions>
-    }
-    @default {}
+  @if (action()) {
+    <mat-card-actions align="end">
+      <button
+        mat-icon-button
+        [color]="action() === 'remove' ? 'warn' : ''"
+        (click)="movieAction.emit(movie())"
+        [attr.aria-label]="action() === 'add' ? 'Add to collection' : 'Remove from collection'"
+      >
+        <mat-icon>{{ actionIcon() }}</mat-icon>
+      </button>
+    </mat-card-actions>
   }
 </mat-card>

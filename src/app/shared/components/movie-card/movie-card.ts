@@ -18,11 +18,14 @@ export class MovieCard {
   readonly movie = input.required<Movie>();
   readonly action = input<'add' | 'remove' | null>(null);
 
-  readonly add = output<Movie>();
-  readonly remove = output<Movie>();
+  readonly movieAction = output<Movie>();
 
   readonly posterUrl = computed(() => {
     const path = this.movie().posterPath;
     return path ? `${environment.tmdbImageBaseUrl}/w500${path}` : null;
   });
+
+  readonly actionIcon = computed(() =>
+    this.action() === 'add' ? 'playlist_add' : 'delete_outline',
+  );
 }
