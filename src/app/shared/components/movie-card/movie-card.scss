@@ -43,4 +43,11 @@
     color: var(--mat-sys-on-surface-variant);
     margin: 0;
   }
+
+  &__genres {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--mat-sys-on-surface-variant);
+    margin: 2px 0 0;
+  }
 }

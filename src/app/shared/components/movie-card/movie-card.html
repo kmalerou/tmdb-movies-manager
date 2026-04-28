@@ -10,6 +10,9 @@
   <mat-card-content class="movie-card__content">
     <p class="movie-card__title">{{ movie().title }}</p>
     <p class="movie-card__meta">⭐ {{ movie().voteAverage | number: '1.1-1' }}</p>
+    @if (movie().genres.length) {
+      <p class="movie-card__genres">{{ movie().genres.slice(0, 2).join(' · ') }}</p>
+    }
   </mat-card-content>
 
   @if (action()) {

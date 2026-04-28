@@ -8,6 +8,7 @@ const STUB_MOVIES: Movie[] = Array.from({ length: 12 }, (_, i) => ({
   title: `Movie Title ${i + 1}`,
   posterPath: null,
   voteAverage: 6 + (i % 4) * 0.5,
+  genres: i % 3 === 0 ? ['Action', 'Thriller'] : i % 3 === 1 ? ['Drama'] : ['Comedy', 'Romance'],
 }));
 
 @Component({
