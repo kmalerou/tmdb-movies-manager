@@ -1,0 +1,9 @@
+<div class="movie-grid" [style.grid-template-columns]="layout.gridColumns()">
+  @for (movie of movies(); track movie.id) {
+    <app-movie-card
+      [movie]="movie"
+      [action]="action()"
+      (movieAction)="movieAction.emit($event)"
+    />
+  }
+</div>
