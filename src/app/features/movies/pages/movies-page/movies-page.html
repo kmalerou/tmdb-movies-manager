@@ -1,11 +1,10 @@
 <div class="movies-page">
   <div class="movies-page__search">
     <app-search-bar (queryChange)="onQueryChange($event)" />
+    @if (isLoading()) {
+      <mat-progress-bar mode="indeterminate" class="movies-page__progress" />
+    }
   </div>
-
-  @if (isLoading()) {
-    <mat-progress-bar mode="indeterminate" />
-  }
 
   <app-movie-grid [movies]="movies()" action="add" (movieAction)="onMovieAction($event)" />
 
