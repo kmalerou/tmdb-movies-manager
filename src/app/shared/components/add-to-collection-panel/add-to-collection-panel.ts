@@ -41,7 +41,6 @@ export class AddToCollectionPanel {
 
   addToCollection(collectionId: string): void {
     this.store.dispatch(CollectionsActions.addMovie({ collectionId, movie: this.movie }));
-    this.close();
   }
 
   close(): void {
