@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { environment } from '../../../../environments/environment';
 import { Movie } from '../../models/movie.model';
+import { GenresPipe } from '../../pipes/genres-pipe';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [DecimalPipe, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [DecimalPipe, MatCardModule, MatButtonModule, MatIconModule, GenresPipe],
   templateUrl: './movie-card.html',
   styleUrl: './movie-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

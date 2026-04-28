@@ -1,6 +1,8 @@
+@let movieData = movie();
+
 <mat-card class="movie-card">
   @if (posterUrl()) {
-    <img class="movie-card__poster" [src]="posterUrl()" [alt]="movie().title" />
+    <img class="movie-card__poster" [src]="posterUrl()" [alt]="movieData.title" />
   } @else {
     <div class="movie-card__poster movie-card__poster--placeholder">
       <mat-icon>movie</mat-icon>
@@ -8,10 +10,10 @@
   }
 
   <mat-card-content class="movie-card__content">
-    <p class="movie-card__title">{{ movie().title }}</p>
-    <p class="movie-card__meta">⭐ {{ movie().voteAverage | number: '1.1-1' }}</p>
-    @if (movie().genres.length) {
-      <p class="movie-card__genres">{{ movie().genres.slice(0, 2).join(' · ') }}</p>
+    <p class="movie-card__title">{{ movieData.title }}</p>
+    <p class="movie-card__meta">⭐ {{ movieData.voteAverage | number: '1.1-1' }}</p>
+    @if (movieData.genres.length) {
+      <p class="movie-card__genres">{{ movieData.genres | genres }}</p>
     }
   </mat-card-content>
 
@@ -20,7 +22,7 @@
       <button
         mat-icon-button
         [color]="action() === 'remove' ? 'warn' : ''"
-        (click)="movieAction.emit(movie())"
+        (click)="movieAction.emit(movieData)"
         [attr.aria-label]="action() === 'add' ? 'Add to collection' : 'Remove from collection'"
       >
         <mat-icon>{{ actionIcon() }}</mat-icon>
