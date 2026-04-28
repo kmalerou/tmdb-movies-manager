@@ -1,0 +1,18 @@
+@let collectionData = collection();
+
+<div class="collection-detail">
+  <div class="collection-detail__header">
+    <button mat-icon-button aria-label="Back to collections" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="collection-detail__title">{{ collectionData?.name }}</h2>
+  </div>
+
+  @if (!collectionData) {
+    <p class="collection-detail__not-found">Collection not found.</p>
+  } @else if (collectionData.movies.length === 0) {
+    <p class="collection-detail__empty">No movies in this collection yet.</p>
+  } @else {
+    <app-movie-grid [movies]="collectionData.movies" action="remove" (movieAction)="onRemoveMovie($event)" />
+  }
+</div>

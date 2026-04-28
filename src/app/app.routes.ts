@@ -7,5 +7,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/movies/movies.routes').then((m) => m.moviesRoutes),
   },
+  {
+    path: 'collections',
+    loadChildren: () =>
+      import('./features/collections/collections.routes').then((m) => m.collectionsRoutes),
+  },
   { path: '**', redirectTo: 'movies' },
 ];

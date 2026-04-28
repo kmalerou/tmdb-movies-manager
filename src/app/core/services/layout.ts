@@ -26,4 +26,17 @@ export class LayoutService {
       ),
     { initialValue: 'repeat(2, 1fr)' },
   );
+
+  readonly collectionGridColumns = toSignal(
+    this.observer
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .pipe(
+        map(({ breakpoints }) => {
+          if (breakpoints[Breakpoints.XSmall]) return 'repeat(1, 1fr)';
+          if (breakpoints[Breakpoints.Small]) return 'repeat(2, 1fr)';
+          return 'repeat(3, 1fr)';
+        }),
+      ),
+    { initialValue: 'repeat(1, 1fr)' },
+  );
 }

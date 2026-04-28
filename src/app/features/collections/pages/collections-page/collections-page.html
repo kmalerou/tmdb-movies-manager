@@ -1,0 +1,17 @@
+<div class="collections-page">
+  @if (collections().length === 0) {
+    <div class="collections-page__empty">
+      <p>No collections yet. Create your first one!</p>
+    </div>
+  } @else {
+    <div class="collections-page__grid" [style.grid-template-columns]="layout.collectionGridColumns()">
+      @for (collection of collections(); track collection.id) {
+        <app-collection-card [collection]="collection" (delete)="onDelete($event)" />
+      }
+    </div>
+  }
+</div>
+
+<button mat-fab class="fab" aria-label="New collection" (click)="openCreateDialog()">
+  <mat-icon>add</mat-icon>
+</button>

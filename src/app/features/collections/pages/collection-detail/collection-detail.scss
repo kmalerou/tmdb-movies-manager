@@ -1,0 +1,21 @@
+.collection-detail {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 8px 8px 4px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  &__empty,
+  &__not-found {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

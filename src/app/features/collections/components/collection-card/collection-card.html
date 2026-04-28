@@ -1,0 +1,14 @@
+@let collectionData = collection();
+
+<mat-card class="collection-card" [routerLink]="['/collections', collectionData.id]">
+  <mat-card-header>
+    <mat-card-title>{{ collectionData.name }}</mat-card-title>
+    <mat-card-subtitle>{{ collectionData.movies.length }} {{ collectionData.movies.length === 1 ? 'movie' : 'movies' }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions align="end">
+    <button mat-icon-button color="warn" aria-label="Delete collection" (click)="onDelete($event)">
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
