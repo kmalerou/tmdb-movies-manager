@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { of } from 'rxjs';
 
-import { Layout } from './layout';
+import { LayoutService } from './layout';
 
-describe('Layout', () => {
-  let service: Layout;
-
+describe('LayoutService', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Layout);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: BreakpointObserver, useValue: { observe: () => of({ matches: false, breakpoints: {} }) } },
+      ],
+    });
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(TestBed.inject(LayoutService)).toBeTruthy();
   });
 });

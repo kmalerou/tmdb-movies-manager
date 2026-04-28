@@ -1,22 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideStore, provideState } from '@ngrx/store';
 import { CollectionsPage } from './collections-page';
+import { collectionsFeature } from '../../store/collections.reducer';
 
 describe('CollectionsPage', () => {
-  let component: CollectionsPage;
-  let fixture: ComponentFixture<CollectionsPage>;
-
-  beforeEach(async () => {
+  it('should create', async () => {
     await TestBed.configureTestingModule({
       imports: [CollectionsPage],
+      providers: [provideRouter([]), provideStore(), provideState(collectionsFeature)],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(CollectionsPage);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(CollectionsPage);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

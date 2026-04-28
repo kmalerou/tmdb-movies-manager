@@ -1,22 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { CollectionCard } from './collection-card';
 
-describe('CollectionCard', () => {
-  let component: CollectionCard;
-  let fixture: ComponentFixture<CollectionCard>;
+const collection = { id: '1', name: 'Favourites', movies: [] };
 
-  beforeEach(async () => {
+describe('CollectionCard', () => {
+  it('should create with required inputs', async () => {
     await TestBed.configureTestingModule({
       imports: [CollectionCard],
+      providers: [provideRouter([])],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(CollectionCard);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(CollectionCard);
+    fixture.componentRef.setInput('collection', collection);
+    fixture.detectChanges();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

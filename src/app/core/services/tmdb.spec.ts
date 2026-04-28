@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
-import { Tmdb } from './tmdb';
+import { TmdbService } from './tmdb';
 
-describe('Tmdb', () => {
-  let service: Tmdb;
-
+describe('TmdbService', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Tmdb);
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(TestBed.inject(TmdbService)).toBeTruthy();
   });
 });
