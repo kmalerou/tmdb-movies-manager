@@ -1,0 +1,14 @@
+.panel-title {
+  padding: 16px 16px 0;
+}
+
+.panel-empty {
+  padding: 16px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 8px 8px;
+}
