@@ -5,10 +5,16 @@
 } @else {
   <mat-nav-list>
     @for (collection of collections(); track collection.id) {
-      <a mat-list-item (click)="addToCollection(collection.id)">
+      <button mat-list-item [disabled]="isInCollection(collection)" (click)="addToCollection(collection.id)">
         {{ collection.name }}
-        <span matListItemMeta>{{ collection.movies.length }}</span>
-      </a>
+        <span matListItemMeta>
+          @if (isInCollection(collection)) {
+            <mat-icon>check</mat-icon>
+          } @else {
+            {{ collection.movies.length }}
+          }
+        </span>
+      </button>
     }
   </mat-nav-list>
 }
